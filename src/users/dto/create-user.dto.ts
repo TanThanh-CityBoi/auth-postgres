@@ -1,9 +1,8 @@
 import { Expose, Transform } from 'class-transformer';
 import { IsNotEmpty, Length } from 'class-validator';
-import { BaseDto } from './base.dto';
 import { isEmpty } from 'lodash';
 
-export class UserDto extends BaseDto {
+export class CreateUserDto {
   @Expose()
   @IsNotEmpty()
   username: string;

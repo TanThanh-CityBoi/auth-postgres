@@ -1,28 +1,13 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Param,
-  ParseIntPipe,
-  Post,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
-import { UserDto } from './dto/user.dto';
+import { Body, Controller, Post } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UserService } from './user.service';
 
 @Controller('user')
 export class UserController {
-  @UsePipes(new ValidationPipe())
-  @Post('login')
-  getProfile(@Body() user: UserDto): UserDto {
-    user.createdAt = new Date();
-    user.updatedAt = new Date();
-    user.deletedAt = new Date();
-    return UserDto.plainToClass(user);
-  }
+  constructor(private readonly userService: UserService) {}
 
-  @Get(':id')
-  getUser(@Param('id', ParseIntPipe) id: number) {
-    return { id };
+  @Post('sign-up')
+  public async getProfile(@Body() data: CreateUserDto) {
+    return await this.userService.signUp(data);
   }
 }
